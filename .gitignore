@@ -3,7 +3,6 @@ Thumbs.db*
 HELP.md
 .gradle
 build/
-git add -f artifacts/app-card-deliver.jar
 
 ### STS ###
 .apt_generated
