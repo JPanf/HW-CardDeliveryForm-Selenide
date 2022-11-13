@@ -1,7 +1,6 @@
-package ru.netology.CardDeliveryOrderTest.test;
+package ru.netology.carddeliveryorderTest.test;
 
 import com.codeborne.selenide.Configuration;
-import net.bytebuddy.pool.TypePool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -13,20 +12,20 @@ import java.time.format.DateTimeFormatter;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-public class CardDeliveryOrderTest {
+public class cardDeliveryOrderTest {
 
     public String generateDate(int days) {
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
     @BeforeEach
-    void OpenURL() {
+    void openURL() {
         open("http://localhost:9999");
         Configuration.holdBrowserOpen = true;
     }
 
     @Test
-    void CorrectDataWithSuccessNotification() {
+    void correctDataWithSuccessNotification() {
         $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(3));
@@ -39,7 +38,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldWarnIfNameEmpty() {
+    void shouldWarnIfNameEmpty() {
         $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(3));
@@ -50,7 +49,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldWarnIfNameinLatin() {
+    void shouldWarnIfNameinLatin() {
         $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(3));
@@ -62,7 +61,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldWarnIfCityInLatin() {
+    void shouldWarnIfCityInLatin() {
         $x(".//span[@data-test-id='city']//input").setValue("Saint-Petersburg");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(3));
@@ -74,7 +73,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldNotConfirmCityOutOfTheList() {
+    void shouldNotConfirmCityOutOfTheList() {
         $x(".//span[@data-test-id='city']//input").setValue("Старая Русса");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(3));
@@ -86,7 +85,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldWarnIfDateEmpty() {
+    void shouldWarnIfDateEmpty() {
         $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='name']//input").setValue("Проверяло Проверяев");
@@ -97,7 +96,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldConfirmDateAfterThreeDays() {
+    void shouldConfirmDateAfterThreeDays() {
         $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(10));
@@ -110,7 +109,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldNotConfirmDateBeforeThreeDays() {
+    void shouldNotConfirmDateBeforeThreeDays() {
         $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(1));
@@ -122,7 +121,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldWarnIfPhoneEmpty() {
+    void shouldWarnIfPhoneEmpty() {
         $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(3));
@@ -134,7 +133,7 @@ public class CardDeliveryOrderTest {
     }
 
     @Test
-    void ShouldWarnIfPhoneFormatWrong() {
+    void shouldWarnIfPhoneFormatWrong() {
         $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
         $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
         $x(".//span[@data-test-id='date']//input").setValue(generateDate(3));
@@ -143,5 +142,16 @@ public class CardDeliveryOrderTest {
         $("[data-test-id=\"agreement\"]").click();
         $(".button").click();
         $x(".//span[@data-test-id='phone']//span[@class='input__sub']").should(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
+    }
+    @Test
+    void shouldWarnIfAgreementBoxEmpty() {
+        $x(".//span[@data-test-id='city']//input").setValue("Санкт-Петербург");
+        $x(".//span[@data-test-id='date']//input").doubleClick().sendKeys(Keys.DELETE);
+        $x(".//span[@data-test-id='date']//input").setValue(generateDate(3));
+        $x(".//span[@data-test-id='name']//input").setValue("Проверяло Проверяев");
+        $x(".//span[@data-test-id='phone']//input").setValue("+79112223344");
+        $("[data-test-id=\"agreement\"]").hover();
+        $(".button").click();
+        $x("//*[text()='Я соглашаюсь с условиями обработки и использования моих персональных данных']").shouldHave(cssValue("color", "rgba(255, 92, 92, 1)"));
     }
 }
