@@ -152,6 +152,8 @@ public class cardDeliveryOrderTest {
         $x(".//span[@data-test-id='phone']//input").setValue("+79112223344");
         $("[data-test-id=\"agreement\"]").hover();
         $(".button").click();
-        $x("//*[text()='Я соглашаюсь с условиями обработки и использования моих персональных данных']").shouldHave(cssValue("color", "rgba(255, 92, 92, 1)"));
+        $("[data-test-id=agreement].input_invalid").should(exist);
+
+        //$x("//*[text()='Я соглашаюсь с условиями обработки и использования моих персональных данных']").shouldHave(cssValue("color", "rgba(255, 92, 92, 1)"));
     }
 }
